@@ -1,6 +1,6 @@
 #pragma once
 #include <ocidl.h>
-#include <xamlOM.h>
+#include "xamlOM.h"
 #include "winrt.hpp"
 
 #include "visualtreewatcher.hpp"

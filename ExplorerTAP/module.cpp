@@ -1,15 +1,16 @@
 #include <combaseapi.h>
-#include <RpcProxy.h>
+// <! error: unknown type name 'IRpcStubBufferVtbl'; did you mean 'IRpcStubBuffer'?
+// #include <RpcProxy.h>
 #include "winrt.hpp"
 
 #include "tap.hpp"
 #include "simplefactory.hpp"
 
-extern "C"
-{
-	_Check_return_ HRESULT STDAPICALLTYPE DLLGETCLASSOBJECT_ENTRY(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ void** ppv);
-	HRESULT STDAPICALLTYPE DLLCANUNLOADNOW_ENTRY();
-}
+// extern "C"
+// {
+// 	_Check_return_ HRESULT STDAPICALLTYPE DLLGETCLASSOBJECT_ENTRY(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ void** ppv);
+// 	HRESULT STDAPICALLTYPE DLLCANUNLOADNOW_ENTRY();
+// }
 
 _Use_decl_annotations_ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv) try
 {
@@ -20,7 +21,8 @@ _Use_decl_annotations_ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LP
 	}
 	else
 	{
-		return DLLGETCLASSOBJECT_ENTRY(rclsid, riid, ppv);
+		// return DLLGETCLASSOBJECT_ENTRY(rclsid, riid, ppv);
+		return CLASS_E_CLASSNOTAVAILABLE;
 	}
 }
 catch (...)
@@ -30,17 +32,19 @@ catch (...)
 
 _Use_decl_annotations_ STDAPI DllCanUnloadNow(void)
 {
-	if (DLLCANUNLOADNOW_ENTRY() == S_FALSE)
-	{
-		return S_FALSE;
-	}
-	else if (winrt::get_module_lock())
+	// if (DLLCANUNLOADNOW_ENTRY() == S_FALSE)
+	// {
+	// 	return S_FALSE;
+	// }
+	// else
+	if (winrt::get_module_lock())
 	{
 		return S_FALSE;
 	}
 	else
 	{
-		winrt::clear_factory_cache();
+		// <! ld.lld: error: undefined symbol: __sync_val_compare_and_swap_16
+		// winrt::clear_factory_cache();
 		return S_OK;
 	}
 }

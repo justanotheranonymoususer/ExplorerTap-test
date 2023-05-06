@@ -2,13 +2,13 @@
 #include "undefgetcurrenttime.h"
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include "redefgetcurrenttime.h"
-#include <windows.ui.xaml.hosting.desktopwindowxamlsource.h>
+#include "windows.ui.xaml.hosting.desktopwindowxamlsource.h"
 
-#include "taskbarappearanceservice.hpp"
+// #include "taskbarappearanceservice.hpp"
 
 void VisualTreeWatcher::InitializeComponent()
 {
-	TaskbarAppearanceService::Install(this);
+	// TaskbarAppearanceService::Install(this);
 }
 
 void VisualTreeWatcher::SetXamlDiagnostics(winrt::com_ptr<IXamlDiagnostics> diagnostics)
@@ -75,7 +75,7 @@ void VisualTreeWatcher::RestoreAllTaskbars()
 VisualTreeWatcher::~VisualTreeWatcher()
 {
 	ClearSources();
-	TaskbarAppearanceService::Uninstall();
+	// TaskbarAppearanceService::Uninstall();
 }
 
 HRESULT VisualTreeWatcher::OnVisualTreeChange(ParentChildRelation, VisualElement element, VisualMutationType mutationType) try
@@ -151,7 +151,8 @@ HRESULT VisualTreeWatcher::CreateInstance(IUnknown* pUnkOuter, REFIID riid, void
 	if (!pUnkOuter)
 	{
 		*ppvObject = nullptr;
-		return winrt::make<TaskbarAppearanceService>(get_strong()).as(riid, ppvObject);
+		// return winrt::make<TaskbarAppearanceService>(get_strong()).as(riid, ppvObject);
+		return CLASS_E_NOAGGREGATION;
 	}
 	else
 	{
